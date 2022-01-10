@@ -14,7 +14,7 @@ const authRoutes = require('./routes/auth');
 // middleware
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin: process.env.CLIENT_URL}));
 
 // routes middleware
 app.use('/api', authRoutes);

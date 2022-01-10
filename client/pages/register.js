@@ -1,24 +1,30 @@
 import { useState } from 'react';
+import { registerUser } from '../services/user';
+
+const initialValues = {
+	userName: '',
+    email: '',
+    password: '',
+    error: '',
+    success: true,
+    btnText:'Register Account',
+}
 
 export default function Register() {
 
-    const [values, setValues] = useState({
-        userName: '',
-        email: '',
-        password: '',
-        error: '',
-        success: '',
-        btnText:'Register Account',
-    });
+    const [values, setValues] = useState(initialValues);
 
     
     const handleChange = (e) => {
-        setValues({ ...values, [e.target.name]: e.target.value, error: '', success: '' });
+        setValues({ ...values, [e.target.name]: e.target.value });
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(values)
+		e.preventDefault();
+		
+		registerUser({ name: values.userName, email: values.email, password: values.password })
+			.then(res => console.log(res))
+		.catch(error => console.log(error))	
     }
 
   return (
@@ -78,8 +84,11 @@ export default function Register() {
                                         placeholder="******************"
                                         value={values.password}
                                         onChange={handleChange}
-									/>
+								  />
+								  {!values.success && (
 									<p className="text-xs italic text-red-500">Please choose a password.</p>
+								  )}
+									
 								</div>
 								
 							</div>

@@ -1,7 +1,6 @@
 
 
 exports.register = (req, res) => {
-    res.json({
-        data: 'you hit register middleware'
-    })
+    const data = req.body;
+    return res.json(data);
 }
